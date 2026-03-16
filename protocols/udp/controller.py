@@ -83,6 +83,7 @@ class RobotDogUDPController:
     # 机器狗消息更新部分
     def get_robot_state(self) -> dict:
         """获取当前机器狗状态"""
+        logger.info(f"udp当前机器狗状态: {self.robot_state}")
         return self.robot_state.copy()
 
     def _start_state_update(self):
@@ -108,7 +109,7 @@ class RobotDogUDPController:
             if result:
                 head, data = result
                 # ==== 新增：打印未经解析的原始 UDP 报文信息 ====
-                logger.info(f"[Raw UDP Data] Code: 0x{head.code:08X}, Size: {len(data)} bytes, Hex: {data.hex().upper()}")
+                # logger.info(f"[Raw UDP Data] Code: 0x{head.code:08X}, Size: {len(data)} bytes, Hex: {data.hex().upper()}")
 
                 if head.code == CommandCode.RECEIVE_RCS_DATA:
                     if len(data) >= ctypes.sizeof(RcsData):
@@ -148,7 +149,6 @@ class RobotDogUDPController:
                         self.robot_state["battery_voltage"] = battery_data.voltage
                         self.robot_state["battery_current"] = battery_data.current
                         self.robot_state["battery_cycles"] = battery_data.cycles
-                        print(battery_data.cycles)
                         self.robot_state["battery_protected"] = battery_data.protected_state
 
                 elif head.code == CommandCode.RECEIVE_SENSOR_DATA:

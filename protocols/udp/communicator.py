@@ -186,9 +186,9 @@ class UDPCommunicator:
             # 提取数据部分
             data_part = data[ctypes.sizeof(CommandHead) :]
 
-            _logger.info(
-                f"接收数据: code=0x{head.code:08X}, type={head.type}, size={len(data_part)}"
-            )
+            # _logger.info(
+            #     f"接收数据: code=0x{head.code:08X}, type={head.type}, size={len(data_part)}"
+            # )
             return (head, data_part)
 
         except socket.timeout:

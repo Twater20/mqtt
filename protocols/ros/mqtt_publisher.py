@@ -45,9 +45,12 @@ MQTT_TOPIC = f"$thing/up/property/x30pro/{DEVICE_ID}"
 
 # UDP 配置（用于获取电池信息）
 MOTION_HOST = "192.168.1.103"
-MOTION_PORT = 43897
+MOTION_PORT = 30001
 PERCEPTION_HOST = "192.168.1.103"
-RECEIVE_PORT = 43897
+RECEIVE_PORT =30001
+
+# 上报频率配置（单位：秒，默认1秒上报一次）
+REPORT_INTERVAL = 10
 # ==============================================
 
 
@@ -126,7 +129,8 @@ class StateBridge:
     格式化后发布到MQTT
     """
     
-    def __init__(self):
+    def __init__(self, report_interval: float = REPORT_INTERVAL):
+        self.report_interval = report_interval
         # 初始化 ROS 控制器（订阅运动状态、温度等话题）
         self.ros_comm = ROSCommunicator(node_name="mqtt_bridge")
         self.ros_controller = RobotDogROSController(self.ros_comm)
@@ -302,8 +306,8 @@ class StateBridge:
             except Exception as e:
                 logger.error(f"桥接循环发生错误: {e}")
                 
-            # 物模型上报频率假设为 1Hz，可由业务需求自行改变
-            time.sleep(1.0)
+            # 物模型上报频率，可通过 REPORT_INTERVAL 配置或实例化时传入
+            time.sleep(self.report_interval)
 
 
 if __name__ == "__main__":
