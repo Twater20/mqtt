@@ -1,0 +1,454 @@
+{
+  "properties": [
+    {
+      "id": "connection_status.is_online",
+      "name": "在线状态",
+      "description": "",
+      "valueType": {
+        "type": "boolean"
+      },
+      "mode": "rw"
+    },
+    {
+      "id": "battery_percentage",
+      "name": "电量",
+      "description": "相对于初始容量衰减",
+      "valueType": {
+        "type": "int"
+      },
+      "mode": "rw"
+    },
+  {
+      "id": "location",
+      "name": "当前位置",
+      "description": "经纬度坐标",
+      "valueType": {
+        "type": "string"
+      },
+      "mode": "rw"
+    },
+    {
+      "id": "firmware_version",
+      "name": "固件版本",
+      "description": "",
+      "valueType": {
+        "type": "string"
+      },
+      "mode": "rw"
+    },
+    {
+      "id": "temperature",
+      "name": "平均温度",
+      "description": "温度值",
+      "valueType": {
+        "type": "float"
+      },
+      "mode": "rw"
+    },
+    {
+      "id": "runtime_info.runtime_hours",
+      "name": "运行时长",
+      "description": "",
+      "valueType": {
+        "type": "string"
+      },
+      "mode": "rw"
+    },
+    {
+      "id": "collection_time",
+      "name": "最后通讯时间",
+      "description": "",
+      "valueType": {
+        "type": "date"
+      },
+      "mode": "rw"
+    },
+    {
+      "id": "battery_health.health_status",
+      "name": "电池健康度",
+      "description": "",
+      "valueType": {
+        "type": "string"
+      },
+      "mode": "rw"
+    },
+    {
+      "id": "battery_health.cycle_count",
+      "name": "充电循环次数",
+      "description": "",
+      "valueType": {
+        "type": "string"
+      },
+      "mode": "rw"
+    },
+    {
+      "id": "robot_mode.mode_name",
+      "name": "运动状态",
+      "description": "",
+      "valueType": {
+        "type": "string"
+      },
+      "mode": "rw"
+    },
+    {
+      "id": "motor_temp_lf_hip_fl",
+      "name": "左前腿-髋横摆电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_lf_hip_fr",
+      "name": "左前腿-髋俯仰电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_lf_knee",
+      "name": "左前腿-膝电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_rf_hip_fl",
+      "name": "右前腿-髋横摆电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_rf_hip_fr",
+      "name": "右前腿-髋俯仰电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_rf_knee",
+      "name": "右前腿-膝电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_lr_hip_fl",
+      "name": "左后腿-髋横摆电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_lr_hip_fr",
+      "name": "左后腿-髋俯仰电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_lr_knee",
+      "name": "左后腿-膝电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_rr_hip_fl",
+      "name": "右后腿-髋横摆电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_rr_hip_fr",
+      "name": "右后腿-髋俯仰电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "motor_temp_rr_knee",
+      "name": "右后腿-膝电机温度",
+      "valueType": {
+        "type": "float",
+        "specs": {
+          "min": -20,
+          "max": 80,
+          "unit": "℃",
+          "step": 0.1
+        }
+      },
+      "mode": "r"
+    },
+    {
+      "id": "left_front_leg_status",
+      "name": "左前腿状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": 0,
+            "label": "正常"
+          },
+          {
+            "value": 1,
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r"
+    },
+    {
+      "id": "left_back_leg_status",
+      "name": "左后腿状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": 0,
+            "label": "正常"
+          },
+          {
+            "value": 1,
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r"
+    },
+    {
+      "id": "right_front_leg_status",
+      "name": "右前腿状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": 0,
+            "label": "正常"
+          },
+          {
+            "value": 1,
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r"
+    },
+    {
+      "id": "right_back_leg_status",
+      "name": "右后腿状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": 0,
+            "label": "正常"
+          },
+          {
+            "value": 1,
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r"
+    },
+    {
+      "id": "5g_module_status",
+      "name": "5G模组状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": 0,
+            "label": "正常"
+          },
+          {
+            "value": 1,
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r"
+    },
+    {
+      "id": "bluetooth_module_status",
+      "name": "蓝牙模块状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": "0",
+            "label": "正常"
+          },
+          {
+            "value": "1",
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r",
+      "required": true,
+      "description": "蓝牙通信模块软件运行状态，0=正常（可配对/通信），1=异常（无法连接/通信）"
+    },
+    {
+      "id": "navigation_module_status",
+      "name": "导航模块状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": "0",
+            "label": "正常"
+          },
+          {
+            "value": "1",
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r",
+      "required": true,
+      "description": "导航算法模块软件运行状态，0=正常（可定位/规划路径），1=异常（定位失效/路径规划失败）"
+    },
+    {
+      "id": "image_module_status",
+      "name": "图像模块状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": "0",
+            "label": "正常"
+          },
+          {
+            "value": "1",
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r",
+      "required": true,
+      "description": "图像采集/识别模块软件运行状态，0=正常（可成像/识别），1=异常（画面异常/识别失败）"
+    },
+    {
+      "id": "scheduling_module_status",
+      "name": "调度模块状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": "0",
+            "label": "正常"
+          },
+          {
+            "value": "1",
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r",
+      "required": true,
+      "description": "任务调度模块软件运行状态，0=正常（可接收/执行任务），1=异常（任务卡死/调度失败）"
+    },
+    {
+      "id": "voice_module_status",
+      "name": "语音模块状态",
+      "valueType": {
+        "type": "enum",
+        "specs": [
+          {
+            "value": "0",
+            "label": "正常"
+          },
+          {
+            "value": "1",
+            "label": "异常"
+          }
+        ]
+      },
+      "mode": "r",
+      "required": true,
+      "description": "语音识别/合成模块软件运行状态，0=正常（可识别指令/合成语音），1=异常（识别失败/无语音输出）"
+    }
+  ],
+  "events": [],
+  "functions": []
+}
