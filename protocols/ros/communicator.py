@@ -1,5 +1,6 @@
 """ROS通信模块"""
 
+import logging
 import threading
 import time
 from typing import Any, Callable, Dict, Optional
@@ -9,7 +10,7 @@ try:
 except ImportError as e:
     raise ImportError("ROS未安装，无法使用ROS功能") from e
 
-from utils import get_logger
+from utils import get_logger, setup_logger
 
 logger = get_logger(__name__)
 
@@ -30,7 +31,8 @@ class ROSCommunicator:
         except rospy.exceptions.ROSException as e:
             logger.warning(f"ROS节点可能已初始化: {e}")
 
-        # 发布器字典
+        setup_logger("", level=logging.INFO)
+
         self.publishers: Dict[str, rospy.Publisher] = {}
 
         # 订阅器字典

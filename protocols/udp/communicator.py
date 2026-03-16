@@ -172,11 +172,12 @@ class UDPCommunicator:
         Returns:
             (指令头, 数据字节) 或 None
         """
+        _logger = get_logger(__name__)
         try:
             data, _addr = self.receive_socket.recvfrom(buffer_size)
 
             if len(data) < ctypes.sizeof(CommandHead):
-                logger.warning("接收数据长度不足")
+                _logger.warning("接收数据长度不足")
                 return None
 
             # 解析指令头
@@ -185,7 +186,7 @@ class UDPCommunicator:
             # 提取数据部分
             data_part = data[ctypes.sizeof(CommandHead) :]
 
-            logger.debug(
+            _logger.info(
                 f"接收数据: code=0x{head.code:08X}, type={head.type}, size={len(data_part)}"
             )
             return (head, data_part)
@@ -193,7 +194,7 @@ class UDPCommunicator:
         except socket.timeout:
             return None
         except Exception as e:
-            logger.error(f"接收数据失败: {e}")
+            _logger.error(f"接收数据失败: {e}")
             return None
 
     def close(self):
