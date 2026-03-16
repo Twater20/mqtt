@@ -248,7 +248,7 @@ class StateBridge:
             "firmware_version":            ros_state.get("firmware_version", "1.0.0"),
             "temperature":                 round(cpu_temp, 2),
             "runtime_info.runtime_hours":  runtime_hours,
-            "collection_time":             now.strftime("%Y-%m-%d %H:%M:%S"),
+            "collection_time":             timestamp,
 
             # --- 电池健康 ---
             "battery_health.health_status": health_pct,
@@ -258,18 +258,18 @@ class StateBridge:
             "robot_mode.mode_name": robot_mode_str,
 
             # --- 12个电机温度 ---
-            "motor_temp_lf_hip_fl": round(motor_temps[0], 2),
-            "motor_temp_lf_hip_fr": round(motor_temps[1], 2),
-            "motor_temp_lf_knee":   round(motor_temps[2], 2),
-            "motor_temp_rf_hip_fl": round(motor_temps[3], 2),
-            "motor_temp_rf_hip_fr": round(motor_temps[4], 2),
-            "motor_temp_rf_knee":   round(motor_temps[5], 2),
-            "motor_temp_lr_hip_fl": round(motor_temps[6], 2),
-            "motor_temp_lr_hip_fr": round(motor_temps[7], 2),
-            "motor_temp_lr_knee":   round(motor_temps[8], 2),
-            "motor_temp_rr_hip_fl": round(motor_temps[9], 2),
-            "motor_temp_rr_hip_fr": round(motor_temps[10], 2),
-            "motor_temp_rr_knee":   round(motor_temps[11], 2),
+            "motor_temp_lf_hip_fl": str(round(motor_temps[0], 2)),
+            "motor_temp_lf_hip_fr": str(round(motor_temps[1], 2)),
+            "motor_temp_lf_knee":   str(round(motor_temps[2], 2)),
+            "motor_temp_rf_hip_fl": str(round(motor_temps[3], 2)),
+            "motor_temp_rf_hip_fr": str(round(motor_temps[4], 2)),
+            "motor_temp_rf_knee":   str(round(motor_temps[5], 2)),
+            "motor_temp_lr_hip_fl": str(round(motor_temps[6], 2)),
+            "motor_temp_lr_hip_fr": str(round(motor_temps[7], 2)),
+            "motor_temp_lr_knee":   str(round(motor_temps[8], 2)),
+            "motor_temp_rr_hip_fl": str(round(motor_temps[9], 2)),
+            "motor_temp_rr_hip_fr": str(round(motor_temps[10], 2)),
+            "motor_temp_rr_knee":   str(round(motor_temps[11], 2)),
 
             # --- 四条腿状态 (0=正常/能读取电机温度, 1=异常) ---
             "left_front_leg_status":  lf_status,
@@ -299,6 +299,9 @@ class StateBridge:
             try:
                 payload = self._build_payload()
                 topic = MQTT_TOPIC
+                
+                # 打印即将发布的 MQTT 消息
+                logger.info(f"\n{'='*60}\n[MQTT 发布] Topic: {topic}\n{'='*60}\n{json.dumps(payload, ensure_ascii=False, indent=2)}\n{'='*60}")
                 
                 # 发布到 MQTT
                 self.mqtt_client.publish(topic, payload)
