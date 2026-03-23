@@ -34,8 +34,8 @@ logger = get_logger(__name__)
 
 # ==================== 配置 ====================
 # MQTT 服务器配置
-MQTT_BROKER = "8.148.80.167"
-MQTT_PORT = 11883
+MQTT_BROKER = "36.138.206.49"
+MQTT_PORT = 1883
 MQTT_USERNAME = "eo_iot"
 MQTT_PASSWORD = "Abc@2025"
 
@@ -57,10 +57,11 @@ REPORT_INTERVAL = 10
 class MqttPublisher:
     """MQTT 发布客户端"""
 
-    def __init__(self, broker: str, port: int, username: str, password: str, client_id: str = ""):
+    def __init__(self, broker: str, port: int, username: str, password: str, client_id: str = "", reconnect_interval: int = 5):
         self.broker = broker
         self.port = port
         self.client_id = client_id or f"go2edu1_publisher_{int(time.time())}"
+        self.reconnect_interval = reconnect_interval
         
         try:
             # paho-mqtt 2.0+ requires CallbackAPIVersion
@@ -74,6 +75,8 @@ class MqttPublisher:
         self.client.on_disconnect = self._on_disconnect
         
         self.connected = False
+        self.should_reconnect = True
+        self.reconnect_thread = None
 
     def _on_connect(self, client, userdata, flags, rc):
         if rc == 0:
@@ -85,6 +88,8 @@ class MqttPublisher:
     def _on_disconnect(self, client, userdata, rc):
         logger.warning(f"由于原因 {rc} 断开与MQTT服务器的连接")
         self.connected = False
+        if self.should_reconnect:
+            self._start_reconnect_thread()
 
     def connect(self):
         """连接MQTT Broker并在后台启动循环"""
@@ -97,7 +102,31 @@ class MqttPublisher:
             logger.error(f"MQTT连接异常: {e}")
             return False
 
+    def _start_reconnect_thread(self):
+        """启动重连线程"""
+        if self.reconnect_thread and self.reconnect_thread.is_alive():
+            return
+            
+        self.reconnect_thread = threading.Thread(target=self._reconnect_loop, daemon=True)
+        self.reconnect_thread.start()
+
+    def _reconnect_loop(self):
+        """重连循环"""
+        while self.should_reconnect and not self.connected:
+            try:
+                logger.info(f"尝试重新连接MQTT服务器，{self.reconnect_interval}秒后重试...")
+                time.sleep(self.reconnect_interval)
+                
+                if not self.should_reconnect:
+                    break
+                    
+                self.client.reconnect()
+                
+            except Exception as e:
+                logger.error(f"重连失败: {e}")
+
     def disconnect(self):
+        self.should_reconnect = False
         self.client.loop_stop()
         self.client.disconnect()
 
@@ -140,7 +169,7 @@ class StateBridge:
         self.udp_controller = RobotDogUDPController(self.udp_comm)
         
         # 初始化 MQTT 客户端
-        self.mqtt_client = MqttPublisher(MQTT_BROKER, MQTT_PORT, MQTT_USERNAME, MQTT_PASSWORD)
+        self.mqtt_client = MqttPublisher(MQTT_BROKER, MQTT_PORT, MQTT_USERNAME, MQTT_PASSWORD, reconnect_interval=5)
         
         self.running = False
         self.bridge_thread = None
